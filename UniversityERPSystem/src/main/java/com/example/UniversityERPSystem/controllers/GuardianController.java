@@ -1,6 +1,6 @@
 package com.example.UniversityERPSystem.controllers;
 
-import com.example.UniversityERPSystem.Entities.Guardian;
+import com.example.UniversityERPSystem.DTOs.GuardianDTO;
 import com.example.UniversityERPSystem.Services.GuardianServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +19,11 @@ public class GuardianController {
     }
 
     @PostMapping("add")
-    public Long createGuardian(@RequestParam String name,
-                               @RequestParam String relationship,
-                               @RequestParam String phoneNumber,
-                               @RequestParam Long studentId) throws Exception {
+    public Long createGuardian(
+            @RequestParam String name,
+            @RequestParam String relationship,
+            @RequestParam String phoneNumber,
+            @RequestParam Long studentId) throws Exception {
 
         return guardianServices.createGuardian(
                 name,
@@ -33,28 +34,37 @@ public class GuardianController {
     }
 
     @GetMapping("getAll")
-    public List<Guardian> getAllGuardian() {
-        return guardianServices.getAllGuardian();
+    public List<GuardianDTO> getAllGuardian() {
+
+        return GuardianDTO.convertToDTO(
+                guardianServices.getAllGuardian()
+        );
     }
 
-    @GetMapping("/getById")
-    public Guardian getById(@RequestParam Long id) {
-        return guardianServices.getById(id);
+    @GetMapping("getById")
+    public GuardianDTO getById(@RequestParam Long id) {
+
+        return GuardianDTO.convertToDTO(
+                guardianServices.getById(id)
+        );
     }
 
     @PutMapping("update")
-    public Guardian updateGuardian(@RequestParam Long id,
-                                   @RequestParam String name,
-                                   @RequestParam String relationship,
-                                   @RequestParam String phoneNumber,
-                                   @RequestParam Long studentId) throws Exception {
+    public GuardianDTO updateGuardian(
+            @RequestParam Long id,
+            @RequestParam String name,
+            @RequestParam String relationship,
+            @RequestParam String phoneNumber,
+            @RequestParam Long studentId) throws Exception {
 
-        return guardianServices.updateGuardian(
-                id,
-                name,
-                relationship,
-                phoneNumber,
-                studentId
+        return GuardianDTO.convertToDTO(
+                guardianServices.updateGuardian(
+                        id,
+                        name,
+                        relationship,
+                        phoneNumber,
+                        studentId
+                )
         );
     }
 

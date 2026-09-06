@@ -1,6 +1,6 @@
 package com.example.UniversityERPSystem.Controllers;
 
-import com.example.UniversityERPSystem.Entities.Program;
+import com.example.UniversityERPSystem.DTOs.ProgramDTO;
 import com.example.UniversityERPSystem.Services.ProgramServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,33 +24,43 @@ public class ProgramController {
             @RequestParam String degreeLevel,
             @RequestParam Integer durationYears) {
 
-        return programServices.createProgram(name, degreeLevel, durationYears);
+        return programServices.createProgram(
+                name,
+                degreeLevel,
+                durationYears
+        );
     }
 
     @GetMapping("getAll")
-    public List<Program> getAllProgram() {
+    public List<ProgramDTO> getAllProgram() {
 
-        return programServices.getAllProgram();
+        return ProgramDTO.convertToDTO(
+                programServices.getAllProgram()
+        );
     }
 
     @GetMapping("getById")
-    public Program getById(@RequestParam Long id) {
+    public ProgramDTO getById(@RequestParam Long id) {
 
-        return programServices.getById(id);
+        return ProgramDTO.convertToDTO(
+                programServices.getById(id)
+        );
     }
 
     @PutMapping("update")
-    public Program updateProgram(
+    public ProgramDTO updateProgram(
             @RequestParam Long id,
             @RequestParam String name,
             @RequestParam String degreeLevel,
             @RequestParam Integer durationYears) throws Exception {
 
-        return programServices.updateProgram(
-                id,
-                name,
-                degreeLevel,
-                durationYears
+        return ProgramDTO.convertToDTO(
+                programServices.updateProgram(
+                        id,
+                        name,
+                        degreeLevel,
+                        durationYears
+                )
         );
     }
 

@@ -1,6 +1,6 @@
 package com.example.UniversityERPSystem.Controllers;
 
-import com.example.UniversityERPSystem.Entities.Faculty;
+import com.example.UniversityERPSystem.DTOs.FacultyDTO;
 import com.example.UniversityERPSystem.Services.FacultyServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,26 +27,39 @@ public class FacultyController {
     }
 
     @GetMapping("getAll")
-    public List<Faculty> getAllFaculty() {
-        return facultyServices.getAllFaculty();
+    public List<FacultyDTO> getAllFaculty() {
+
+        return FacultyDTO.convertToDTO(
+                facultyServices.getAllFaculty()
+        );
     }
 
     @GetMapping("getById")
-    public Faculty getById(@RequestParam Long id) {
-        return facultyServices.getById(id);
+    public FacultyDTO getById(@RequestParam Long id) {
+
+        return FacultyDTO.convertToDTO(
+                facultyServices.getById(id)
+        );
     }
 
     @PutMapping("update")
-    public Faculty updateFaculty(
+    public FacultyDTO updateFaculty(
             @RequestParam Long id,
             @RequestParam String name,
             @RequestParam String description) throws Exception {
 
-        return facultyServices.updateFaculty(id, name, description);
+        return FacultyDTO.convertToDTO(
+                facultyServices.updateFaculty(
+                        id,
+                        name,
+                        description
+                )
+        );
     }
 
     @DeleteMapping("delete")
     public Boolean deleteFaculty(@RequestParam Long id) {
+
         return facultyServices.deleteById(id);
     }
 }

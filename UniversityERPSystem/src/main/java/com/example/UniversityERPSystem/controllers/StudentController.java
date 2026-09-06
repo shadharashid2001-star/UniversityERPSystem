@@ -1,5 +1,6 @@
 package com.example.UniversityERPSystem.Controllers;
-import com.example.UniversityERPSystem.Entities.Student;
+
+import com.example.UniversityERPSystem.DTOs.StudentDTO;
 import com.example.UniversityERPSystem.Services.StudentServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class StudentController {
         this.studentServices = studentServices;
     }
 
-    @PostMapping("/add")
+    @PostMapping("add")
     public Long createStudent(@RequestParam String name,
                               @RequestParam String major,
                               @RequestParam String gender,
@@ -34,30 +35,38 @@ public class StudentController {
     }
 
     @GetMapping("getAll")
-    public List<Student> getAllStudent() {
-        return studentServices.getAllStudent();
+    public List<StudentDTO> getAllStudent() {
+
+        return StudentDTO.convertToDTO(
+                studentServices.getAllStudent()
+        );
     }
 
     @GetMapping("getById")
-    public Student getById(@RequestParam Long id) {
-        return studentServices.getById(id);
+    public StudentDTO getById(@RequestParam Long id) {
+
+        return StudentDTO.convertToDTO(
+                studentServices.getById(id)
+        );
     }
 
-    @PutMapping("/update")
-    public Student updateStudent(@RequestParam Long id,
-                                 @RequestParam String name,
-                                 @RequestParam String major,
-                                 @RequestParam String gender,
-                                 @RequestParam String phoneNumber,
-                                 @RequestParam Long programId) throws Exception {
+    @PutMapping("update")
+    public StudentDTO updateStudent(@RequestParam Long id,
+                                    @RequestParam String name,
+                                    @RequestParam String major,
+                                    @RequestParam String gender,
+                                    @RequestParam String phoneNumber,
+                                    @RequestParam Long programId) throws Exception {
 
-        return studentServices.updateStudent(
-                id,
-                name,
-                major,
-                gender,
-                phoneNumber,
-                programId
+        return StudentDTO.convertToDTO(
+                studentServices.updateStudent(
+                        id,
+                        name,
+                        major,
+                        gender,
+                        phoneNumber,
+                        programId
+                )
         );
     }
 

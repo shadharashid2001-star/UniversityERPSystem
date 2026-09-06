@@ -1,6 +1,6 @@
 package com.example.UniversityERPSystem.Controllers;
 
-import com.example.UniversityERPSystem.Entities.Course;
+import com.example.UniversityERPSystem.DTOs.CourseDTO;
 import com.example.UniversityERPSystem.Services.CourseServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,33 +24,43 @@ public class CourseController {
             @RequestParam String courseCode,
             @RequestParam Integer creditHours) {
 
-        return courseServices.createCourse(title, courseCode, creditHours);
+        return courseServices.createCourse(
+                title,
+                courseCode,
+                creditHours
+        );
     }
 
     @GetMapping("getAll")
-    public List<Course> getAllCourse() {
+    public List<CourseDTO> getAllCourse() {
 
-        return courseServices.getAllCourse();
+        return CourseDTO.convertToDTO(
+                courseServices.getAllCourse()
+        );
     }
 
     @GetMapping("getById")
-    public Course getById(@RequestParam Long id) {
+    public CourseDTO getById(@RequestParam Long id) {
 
-        return courseServices.getById(id);
+        return CourseDTO.convertToDTO(
+                courseServices.getById(id)
+        );
     }
 
-    @PutMapping("/update")
-    public Course updateCourse(
+    @PutMapping("update")
+    public CourseDTO updateCourse(
             @RequestParam Long id,
             @RequestParam String title,
             @RequestParam String courseCode,
             @RequestParam Integer creditHours) throws Exception {
 
-        return courseServices.updateCourse(
-                id,
-                title,
-                courseCode,
-                creditHours
+        return CourseDTO.convertToDTO(
+                courseServices.updateCourse(
+                        id,
+                        title,
+                        courseCode,
+                        creditHours
+                )
         );
     }
 

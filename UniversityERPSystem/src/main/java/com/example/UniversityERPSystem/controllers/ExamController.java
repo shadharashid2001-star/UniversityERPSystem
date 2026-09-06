@@ -1,5 +1,6 @@
 package com.example.UniversityERPSystem.controllers;
-import com.example.UniversityERPSystem.Entities.Exam;
+
+import com.example.UniversityERPSystem.DTOs.ExamDTO;
 import com.example.UniversityERPSystem.Services.ExamServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,17 +38,23 @@ public class ExamController {
     }
 
     @GetMapping("getAll")
-    public List<Exam> getAllExam() {
-        return examServices.getAllExam();
+    public List<ExamDTO> getAllExam() {
+
+        return ExamDTO.convertToDTO(
+                examServices.getAllExam()
+        );
     }
 
     @GetMapping("getById")
-    public Exam getById(@RequestParam Long id) {
-        return examServices.getById(id);
+    public ExamDTO getById(@RequestParam Long id) {
+
+        return ExamDTO.convertToDTO(
+                examServices.getById(id)
+        );
     }
 
     @PutMapping("update")
-    public Exam updateExam(
+    public ExamDTO updateExam(
             @RequestParam Long id,
             @RequestParam String title,
             @RequestParam
@@ -56,17 +63,20 @@ public class ExamController {
             @RequestParam Integer totalMarks,
             @RequestParam Long courseId) throws Exception {
 
-        return examServices.updateExam(
-                id,
-                title,
-                examDate,
-                totalMarks,
-                courseId
+        return ExamDTO.convertToDTO(
+                examServices.updateExam(
+                        id,
+                        title,
+                        examDate,
+                        totalMarks,
+                        courseId
+                )
         );
     }
 
     @DeleteMapping("delete")
     public Boolean deleteExam(@RequestParam Long id) {
+
         return examServices.deleteById(id);
     }
 }

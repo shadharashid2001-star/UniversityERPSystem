@@ -1,6 +1,6 @@
 package com.example.UniversityERPSystem.Controllers;
 
-import com.example.UniversityERPSystem.Entities.Instructor;
+import com.example.UniversityERPSystem.DTOs.InstructorDTO;
 import com.example.UniversityERPSystem.Services.InstructorServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +23,8 @@ public class InstructorController {
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String phoneNumber,
-            @RequestParam String specialization
-   , @RequestParam Long depId) {
+            @RequestParam String specialization,
+            @RequestParam Long depId) {
 
         return instructorServices.createInstructor(
                 name,
@@ -36,34 +36,43 @@ public class InstructorController {
     }
 
     @GetMapping("getAll")
-    public List<Instructor> getAllInstructor() {
-        return instructorServices.getAllInstructor();
+    public List<InstructorDTO> getAllInstructor() {
+
+        return InstructorDTO.convertToDTO(
+                instructorServices.getAllInstructor()
+        );
     }
 
     @GetMapping("getById")
-    public Instructor getById(@RequestParam Long id) {
-        return instructorServices.getById(id);
+    public InstructorDTO getById(@RequestParam Long id) {
+
+        return InstructorDTO.convertToDTO(
+                instructorServices.getById(id)
+        );
     }
 
     @PutMapping("update")
-    public Instructor updateInstructor(
+    public InstructorDTO updateInstructor(
             @RequestParam Long id,
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String phoneNumber,
             @RequestParam String specialization) throws Exception {
 
-        return instructorServices.updateInstructor(
-                id,
-                name,
-                email,
-                phoneNumber,
-                specialization
+        return InstructorDTO.convertToDTO(
+                instructorServices.updateInstructor(
+                        id,
+                        name,
+                        email,
+                        phoneNumber,
+                        specialization
+                )
         );
     }
 
     @DeleteMapping("delete")
     public Boolean deleteInstructor(@RequestParam Long id) {
+
         return instructorServices.deleteById(id);
     }
 }

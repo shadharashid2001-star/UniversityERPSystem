@@ -1,6 +1,6 @@
 package com.example.UniversityERPSystem.Controllers;
 
-import com.example.UniversityERPSystem.Entities.University;
+import com.example.UniversityERPSystem.DTOs.UniversityDTO;
 import com.example.UniversityERPSystem.Services.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,36 +23,38 @@ public class UniversityController {
             @RequestParam String name,
             @RequestParam String location) {
 
-        return universityService.createUniversity(name,location);
+        return universityService.createUniversity(name, location);
     }
 
     @GetMapping("getAll")
-    public List<University> getAllUniversity() {
+    public List<UniversityDTO> getAllUniversity() {
 
-        return universityService.getAllUniversity();
+        return UniversityDTO.convertToDTO(
+                universityService.getAllUniversity()
+        );
     }
 
     @GetMapping("getById")
-    public University getById(@RequestParam Long id) {
+    public UniversityDTO getById(@RequestParam Long id) {
 
-
-
-        return universityService.getById(id);
+        return UniversityDTO.convertToDTO(
+                universityService.getById(id)
+        );
     }
 
     @PutMapping("update")
-    public University updateUniversity(
+    public UniversityDTO updateUniversity(
             @RequestParam Long id,
             @RequestParam String name,
             @RequestParam String location) throws Exception {
 
-
-        return universityService.updateUniversity(id, name, location);
+        return UniversityDTO.convertToDTO(
+                universityService.updateUniversity(id, name, location)
+        );
     }
 
     @DeleteMapping("delete")
     public Boolean deleteUniversity(@RequestParam Long id) {
-
 
         return universityService.deleteById(id);
     }
