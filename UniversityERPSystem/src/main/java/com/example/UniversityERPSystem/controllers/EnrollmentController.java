@@ -79,4 +79,16 @@ public class EnrollmentController {
 
         return enrollmentServices.deleteById(id);
     }
+    @PostMapping("enroll")
+    public EnrollmentDTO enrollStudent(
+            @RequestParam Long studentId,
+            @RequestParam Long courseId) throws Exception {
+
+        return EnrollmentDTO.convertToDTO(
+                enrollmentServices.enrollStudent(
+                        studentId,
+                        courseId
+                )
+        );
+    }
 }
