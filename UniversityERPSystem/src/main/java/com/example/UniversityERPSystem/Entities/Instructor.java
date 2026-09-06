@@ -12,8 +12,11 @@ import java.util.List;
 public class Instructor extends BaseClass {
 
     private String name;
-    private String  email;
-    private Integer  phoneNumber;
+
+    private String email;
+
+    private String phoneNumber;
+
     private String specialization;
 
     @ManyToOne
